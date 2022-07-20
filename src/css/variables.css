@@ -1,12 +1,13 @@
 :root {
     --main-color:#7C9CBF;
-    --secondary-color: #2C2738;
+    --secondary-color: rgb(44, 39, 56);
     --text-color:#756F86;
     --actived-color:#0880AE;
     --white-color:#fff;
     --border-color:#DBE2EA;
     --failed-color:#FF7171;
     --light-color:#B1B5BF;
+    --body-color:#E5E5E5;
 
     --main-font:'IBM Plex Sans', sans-serif;
 
