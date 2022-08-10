@@ -1,13 +1,16 @@
 :root {
-    --main-color:#7C9CBF;
-    --secondary-color: rgb(44, 39, 56);
-    --text-color:#756F86;
-    --actived-color:#0880AE;
+    --main-color:#7c9cbf;
+    --secondary-color: rgb(44, 39, 56, 1);
+    --text-color:rgb(117, 111, 134, 1);
+    --actived-color:#0880ae;
     --white-color:#fff;
     --border-color:#DBE2EA;
     --failed-color:#FF7171;
     --light-color:#B1B5BF;
     --body-color:#E5E5E5;
+    --hover-color: rgba(235, 244, 248, 1);
+    --hover-link:#46a6cc;
+
 
     --main-font:'IBM Plex Sans', sans-serif;
 
