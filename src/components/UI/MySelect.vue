@@ -3,7 +3,7 @@
             <div class="select__label">Язык</div>
             <button
                 class="select__btn"
-                @click.prevent="listVisible = !listVisible"
+                @click.prevent="isListVisible = !isListVisible"
             >
                 {{ selectedBtn }}
                  <svg width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -14,13 +14,14 @@
 
             <ul
                 class="select__list"
-                v-show ="listVisible"
+                v-show ="isListVisible"
             >
                 <li
                     class="select__item"
                     v-for="item in items"
                     :key="item.id"
                     @click="selectList(item)"
+
                 >
                     {{ item.value }}
                 </li>
@@ -52,7 +53,7 @@ export default {
     },
     data() {
         return {
-            listVisible:false,
+            isListVisible:false,
             inputSelect:'',
         }
     },
@@ -92,7 +93,6 @@ export default {
     }
 
     &__btn {
-
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -133,7 +133,7 @@ export default {
         box-shadow: 0px 4px 8px rgba(var(--secondary-color), 0.04), 0px 20px 20px rgba(var(--secondary-color), 0.04);
         border-radius: 6px;
         z-index: 5;
-
+        transition: all .4s ease-in;
     }
 
     &__item {

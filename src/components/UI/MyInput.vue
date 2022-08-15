@@ -2,14 +2,14 @@
     <div class="wrap">
         <label :for="name" class="wrap__label">{{label}}</label>
         <input
-        class="wrap__input"
-        :type="type"
-        :name="name"
-        :id="name"
-        :placeholder="placeholder"
-        :value="value"
-        @input="updateValue">
-
+            class="wrap__input"
+            :type="type"
+            :name="name"
+            :id="name"
+            :placeholder="placeholder"
+            :value="value"
+            @input="updateValue"
+        >
     </div>
 </template>
 
@@ -30,13 +30,17 @@ export default {
         },
         placeholder: {
             type: String,
-            required: true
+            default:''
         },
         label: {
             type: String,
             required: true
-        },
-
+        }
+    },
+    methods: {
+        updateValue(e) {
+            this.$emit('update:value', e.target.value)
+        }
     }
 }
 
@@ -45,17 +49,15 @@ export default {
 
 <style lang="scss" scoped>
 .wrap {
-        margin-top: 34px;
-    }
 
-    &__label {
-        font-weight: 500;
-        font-size: 16px;
-        line-height:1.3;
-        color: var(--text-color);
-    }
+          &__label {
+            font-weight: 500;
+            font-size: 16px;
+            line-height:1.3;
+            color: var(--text-color);
+        }
 
-    &__input {
+          &__input {
             width:100%;
             height:52px;
             background: var(--white-color);
@@ -77,5 +79,6 @@ export default {
             &:focus-visible {
                 outline: 2px solid var(--actived-color)
             }
+        }
     }
 </style>

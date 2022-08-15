@@ -3,10 +3,20 @@
 
         <HeaderForm></HeaderForm>
 
-        <div class="form__wrap">
+        <!-- <div class="form__wrap">
             <label class="form__label" for="name">
                 Имя
             </label>
+            <MyInput
+                label="Имя"
+                type="type"
+                id="name"
+                name="name"
+                placeholder="Введите Ваше Имя"
+                v-model:value.trim="form.name"
+
+                @blur="v$.form.name.$touch()"
+            ></MyInput>
             <input
                 class="form__input"
                 type="text"
@@ -18,7 +28,7 @@
             >
             <transition-group name="error" appear v-if="v$.form.name.$error">
                 <p class="form__error" v-if="v$.form.name.required.$invalid">Поле имя обязательно</p>
-                <p  class="form__error" v-if="v$.form.name.alpha.$invalid">
+                <p  class="form__error" v-if="v$.form.name.alpha.$invalid && v$.form.name.alphaCirilic.$invalid">
                     Введите буквенные символы
                 </p>
                 <p  class="form__error" v-if="v$.form.name.minLength.$invalid">
@@ -50,6 +60,9 @@
                 <p  class="form__error" v-if="v$.form.email.email.$invalid">
                     Некoрректный email, пример корректного - test@mail.com
                 </p>
+                <p  class="form__error" v-if="v$.form.email.uniqueEmail.$invalid">
+                    Пользователь с таким  email уже существует
+                </p>
             </transition-group>
 
         </div>
@@ -74,11 +87,11 @@
                 <p  class="form__error" v-if="v$.form.phone.numeric.$invalid">
                     Введети цифры
                 </p>
-                 <p  class="form__error" v-if="v$.form.phone.minLength.$invalid">
+                 <p  class="form__error" v-if="v$.form.phone.onlyElevenDigital.$invalid">
                     Введите 11 символов
                 </p>
             </transition-group>
-        </div>
+        </div> -->
 
         <MySelect
             :items="items"
@@ -95,7 +108,6 @@
        >
        </MyButton>
 
-    <p :="feedback">{{ this.feedback }}</p>
     </form>
 </template>
 
@@ -105,9 +117,10 @@ import HeaderForm from '@/components/HeaderForm'
 import MySelect from '@/components/UI/MySelect'
 import MyCheckbox from '@/components/UI/MyCheckbox'
 import MyButton from '@/components/UI/MyButton'
+import MyInput from '@/components/UI/MyInput'
 
 import useVuelidate from '@vuelidate/core'
-import { required, email, numeric, minLength, maxLength, alpha } from '@vuelidate/validators'
+import { required, email, numeric, minLength, maxLength, alpha, helpers } from '@vuelidate/validators'
 
 
 export default {
@@ -117,6 +130,7 @@ export default {
         MySelect,
         MyCheckbox,
         MyButton,
+        MyInput
   },
   setup () {
     return {
@@ -147,11 +161,34 @@ export default {
             required,
             minLength:minLength(3),
             maxLength:maxLength(10),
-            alpha
+            alpha,
+            alphaCirilic:helpers.regex(/^[А-Яа-я -]*$/)
+
 
        },
-        email: {required, email},
-        phone: {required, numeric, minLength:minLength(11), maxLength:maxLength(11)}
+        email: {
+            required,
+            email,
+            // async uniqueEmail (value) {
+            //     if(value === '') return true
+            //     const res = await axios.get('http://localhost:3000/registrations')
+            //     const registrations = res.data
+            //     const allreadyDoneRegistration = registrations.find(registration => {
+            //         if (registration.email === allreadyDoneRegistration) {
+            //             return false
+            //         }
+            //             return true
+            //         }
+            //     )
+            // }
+        },
+        phone: {
+            required,
+            numeric,
+            onlyElevenDigital (value) {
+                return value.trim().length === 11
+            }
+        }
       }
 
     }
@@ -160,20 +197,25 @@ export default {
     itemSelect(item) {
         this.selectedBtn = item.value
     },
-    //   setName ($event) {
-    //   this.form.name = $event.target.value.toUpperCase()
-    // //   this.v$.form.name.$touch()
-    // },
 
-      submitForm () {
-            this.v$.$validate()
+    submitForm () {
             this.v$.$touch()
+            this.v$.$validate()
             if(!this.v$.$invalid) {
-               this.feedback = 'Submitted form'
+                // alert('Form submitted')
+                console.log(this.form);
             }
 
             this.v$.$reset()
         }
+    //   submitForm() {
+    //   this.v$.$validate()
+    //   // checks all inputs
+    //   if (!this.v$.$invalid) {
+    //     // if ANY fail validation
+    //     console.log(this.form);
+    //   }
+    // },
   },
 }
 
@@ -181,7 +223,7 @@ export default {
 
  <style lang="scss" scoped>
 .form {
-    margin:100px auto;
+    margin:40px auto;
     display:flex;
     flex-direction:column;
     justify-content:flex-start;
