@@ -1,13 +1,50 @@
 <template>
     <div class="checkbox">
-        <input type="checkbox" name="condition" id="condition" class="checkbox__input">
-        <label for="condition" class="checkbox__label">Принимаю
+        <input
+            class="checkbox__input"
+            :type="type"
+            :name="name"
+            :id="name"
+            :value="value"
+            :checked="checked"
+            @change="updateChecked($event)"
+        >
+        <label
+                for="condition"
+                class="checkbox__label"
+            >Принимаю
             <a href="https://www.copyright.ru/documents/zashita_avtorskih_prav/zashchita_kontenta_sayta/tipovoe_polzovatelskoe_soglashenie_site/" class="checkbox__link" target="_blank">условия</a>
-            использования</label>
+            использования
+        </label>
     </div>
 </template>
 
 <script >
+export default {
+    props:{
+         value: {
+            type: String,
+            default: ''
+        },
+        name: {
+            type: String,
+            required: true
+        },
+        type: {
+            type: String,
+            default: 'text'
+        },
+        checked: {
+            type: Boolean,
+            default: false
+        },
+    },
+    methods: {
+        updateChecked(event) {
+             this.$emit('update:checked', event.target.checked)
+        }
+    }
+}
 
 </script>
 

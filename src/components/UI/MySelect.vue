@@ -27,11 +27,11 @@
                 </li>
             </ul>
 
-            <input
+            <!-- <input
                 type="text"
                 class="select__input"
-                v-model.trim="inputSelect"
-                >
+                v-model.trim="selectedBtn"
+                > -->
         </div> <!--select-->
 </template>
 
@@ -54,16 +54,16 @@ export default {
     data() {
         return {
             isListVisible:false,
-            inputSelect:'',
+
         }
     },
     methods: {
         selectList (item) {
             this.$emit('select', item)
-            this.listVisible = false
+            this.isListVisible = false
         },
         hideList () {
-            this.listVisible = false
+            this.isListVisible = false
         }
     },
     mounted() {

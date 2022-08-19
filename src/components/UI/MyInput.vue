@@ -1,6 +1,8 @@
 <template>
     <div class="wrap">
-        <label :for="name" class="wrap__label">{{label}}</label>
+        <label
+            :for="name"
+            class="wrap__label">{{label}}</label>
         <input
             class="wrap__input"
             :type="type"
@@ -10,6 +12,14 @@
             :value="value"
             @input="updateValue"
         >
+        <TransitionGroup name="error">
+        <div
+            class="wrap__error"
+            v-for="element of error"
+            :key="element.$uid">
+            <div class="wrap__error wrap__error-message">{{element.$message}}</div>
+        </div>
+        </TransitionGroup>
     </div>
 </template>
 
@@ -35,6 +45,10 @@ export default {
         label: {
             type: String,
             required: true
+        },
+        error: {
+            type: Array,
+            required: false
         }
     },
     methods: {
@@ -49,6 +63,7 @@ export default {
 
 <style lang="scss" scoped>
 .wrap {
+        margin-top: 34px;
 
           &__label {
             font-weight: 500;
@@ -80,5 +95,32 @@ export default {
                 outline: 2px solid var(--actived-color)
             }
         }
+
+         &__error {
+            margin-top: 8px;
+            color: var(--failed-color);
+            font-size: 14px;
+
+            &-message {
+                transition: all 0.4s ease-in;
+            }
+        }
     }
+
+.error-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.error-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.error-enter-from {
+    transform: translateX(-50px);
+    opacity: 0;
+}
+.error-leave-to {
+    transform: translateX(150px);
+    opacity: 0;
+}
 </style>
