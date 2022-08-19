@@ -21,22 +21,14 @@
                     v-for="item in items"
                     :key="item.id"
                     @click="selectList(item)"
-
                 >
                     {{ item.value }}
                 </li>
             </ul>
-
-            <!-- <input
-                type="text"
-                class="select__input"
-                v-model.trim="selectedBtn"
-                > -->
         </div> <!--select-->
 </template>
 
 <script >
-
 
 export default {
       props: {
@@ -54,7 +46,7 @@ export default {
     data() {
         return {
             isListVisible:false,
-
+            activeClass: 'active',
         }
     },
     methods: {
@@ -149,10 +141,6 @@ export default {
         &:hover {
             background: var(--hover-color);
         }
-    }
-
-    &__input {
-        display: none;
     }
 }
 

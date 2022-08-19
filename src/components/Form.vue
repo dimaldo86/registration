@@ -40,6 +40,7 @@
             :items="items"
             @select="itemSelect"
             :selectedBtn="selectedBtn"
+            v-model="form.select"
         ></MySelect>
 
        <MyCheckbox
@@ -95,6 +96,7 @@ export default {
             email:'',
             phone:'',
             isCheckboxActive:false,
+            select:''
         },
 
         feedback:''
@@ -112,18 +114,6 @@ export default {
         email: {
             required:helpers.withMessage('Поле Имя обязательно', required),
             email:helpers.withMessage('Некoрректный email, пример корректного - test@mail.com',email ),
-            // async uniqueEmail (value) {
-            //     if(value === '') return true
-            //     const res = await axios.get('http://localhost:3000/registrations')
-            //     const registrations = res.data
-            //     const allreadyDoneRegistration = registrations.find(registration => {
-            //         if (registration.email === allreadyDoneRegistration) {
-            //             return false
-            //         }
-            //             return true
-            //         }
-            //     )
-            // }
         },
         phone: {
             required:helpers.withMessage('Поле Имя обязательно', required),
@@ -136,7 +126,7 @@ export default {
   },
   methods: {
     itemSelect(item) {
-        this.selectedBtn = item.value
+        this.selectedBtn = this.form.select = item.value
     },
 
     submitForm () {
@@ -144,11 +134,13 @@ export default {
 
            if (!this.v$.$error) {
         // if ANY fail validation
-                this.feedback = 'Form successfully submitted.'
+                this.feedback = 'Форма успешна отправлена'
+                console.log(this.form);
+                this.v$.$reset()
             } else {
-                this.feedback = 'Form failed validation'
+                this.feedback = 'Форма незарегистрирована'
             }
-            this.v$.$reset()
+
         }
     },
 }
@@ -173,6 +165,7 @@ export default {
         text-align: center;
         margin-top: 15px;
         color: var(--success-color);
+        font-size: 18px;
     }
 }
 
