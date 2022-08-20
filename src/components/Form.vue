@@ -155,8 +155,8 @@ export default {
     justify-content:flex-start;
     // align-items:center;
     width:460px;
-    min-height:790px;
-    padding:40px 30px;
+    min-height:740px;
+    padding:30px 30px;
     background: var(--white-color);
     box-shadow: 0px 12px 24px rgba(var(--secondary-color), 0.02), 0px 32px 64px rgba(var(--secondary-color), 0.04);
     border-radius: 24px;

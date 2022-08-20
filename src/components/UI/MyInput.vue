@@ -63,7 +63,7 @@ export default {
 
 <style lang="scss" scoped>
 .wrap {
-        margin-top: 34px;
+        margin-top: 24px;
 
           &__label {
             font-weight: 500;
